@@ -5,7 +5,7 @@
 #include "player.hpp"
 #include "ghost.hpp"
 #include "ai.hpp"
-
+#include "textures.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -14,10 +14,13 @@ class Level
 {
 private:
 	Helper helper;
-
+	Textures textures;
 	std::vector<int> tiles;
 
+
 	// this will need to change to accomodate textures
+	std::vector<sf::Sprite> wallsprites;
+
 	std::vector<sf::RectangleShape> shapes; // these are grid textures
 	sf::CircleShape dot;
 
