@@ -3,58 +3,10 @@ import face_recognition
 import numpy as np
 import math
 import time
-
-# # Load the jpg file into a numpy array
-# image = face_recognition.load_image_file("photo.jpg")
-
-# # Find all facial features in all the faces in the image
-# face_landmarks_list = face_recognition.face_landmarks(image)
-
-# print("I found {} face(s) in this photograph.".format(len(face_landmarks_list)))
-
-# for face_landmarks in face_landmarks_list:
-
-#     # Print the location of each facial feature in this image
-#     facial_features = [
-#         'chin',
-#         'left_eyebrow',
-#         'right_eyebrow',
-#         'nose_bridge',
-#         'nose_tip',
-#         'left_eye',
-#         'right_eye',
-#         'top_lip',
-#         'bottom_lip'
-#     ]
-
-#     for facial_feature in facial_features:
-#         print("The {} in this face has the following points: {}".format(facial_feature, face_landmarks[facial_feature]))
-
-#     # Let's trace out each facial feature in the image with a line!
-#     pil_image = Image.fromarray(image)
-#     d = ImageDraw.Draw(pil_image)
-
-#     for facial_feature in facial_features:
-#         d.line(face_landmarks[facial_feature], width=5)
-
-# pil_image.show()
 import cv2
 
-# This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
-# other example, but it includes some basic performance tweaks to make things run a lot faster:
-#   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
-#   2. Only detect faces in every other frame of video.
-
-# PLEASE NOTE: This example requires OpenCV (the `cv2` library) to be installed only to read from your webcam.
-# OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
-# specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
-
-# Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
-# Load a sample picture and learn how to recognize it.
-
-# Initialize some variables
 face_locations = []
 face_names = []
 process_this_frame = 0
@@ -66,11 +18,7 @@ ud = 'center'
 lr = "center"
 
 while True:
-
-    # Grab a single frame of video
     ret, frame = video_capture.read()
-
-    # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
     face_locations = face_recognition.face_locations(small_frame, 1)
@@ -79,7 +27,6 @@ while True:
         for feature in face:
             cv2.polylines(frame, np.array([face[feature]])*4, isClosed=False, color=(255,0,0), thickness=4)
 
-    # print(face_landmarks)
     face_mean_x = []
     face_mean_y = []
     for face in face_landmarks:
@@ -92,7 +39,6 @@ while True:
         face_sd = np.std(face_mean_x) + np.std(face_mean_y)
         face_x = sum(face_mean_x)/len(face_mean_x)
         face_y = sum(face_mean_y)/len(face_mean_y)
-        # print(face_x, face_y)
 
         nose_x = face_landmarks[0]['nose_bridge'][-1][0]
         nose_y = face_landmarks[0]['nose_bridge'][-1][1]
@@ -150,22 +96,6 @@ while True:
         cv2.circle(frame, (nose_x*4, nose_y*4), 10, color=(0,0,255), thickness=4)
         cv2.circle(frame, (top_lip_x*4, top_lip_y*4), 10, color=(0,0,255), thickness=4)
         cv2.circle(frame, (bot_lip_x*4, bot_lip_y*4), 10, color=(0,0,255), thickness=4)
-
-    # Display the results
-    # for (top, right, bottom, left), name in zip(face_locations, face_names):
-    #     # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-    #     top *= 4
-    #     right *= 4
-    #     bottom *= 4
-    #     left *= 4
-
-    #     # Draw a box around the face
-    #     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-
-    #     # Draw a label with a name below the face
-    #     cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
-    #     font = cv2.FONT_HERSHEY_DUPLEX
-    #     cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
     cv2.imshow('Video', frame)
