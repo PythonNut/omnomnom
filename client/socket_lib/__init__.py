@@ -14,7 +14,7 @@ class ClientSocket:
         # connect on construction,
         # use for duration of a game,
         # close connection on destruction later
-        self.sock.connect(("192.168.43.67", self.PORT))
+        self.sock.connect(("192.168.43.180", self.PORT))
 
     def __del__(self):
         """
