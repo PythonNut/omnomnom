@@ -11,7 +11,6 @@ import socket_lib
 video_capture = cv2.VideoCapture(0)
 
 face_locations = []
-face_names = []
 process_this_frame = 0
 oc_time = 0
 oc_debounced = False
@@ -20,15 +19,27 @@ nom = False
 up_mark = None
 down_mark = None
 
+fps = []
+
 while True:
     ret, frame = video_capture.read()
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+
+    t = time.clock()
+    fps.append(t)
+
+    fps = list(filter(lambda x: t - x < 5, fps))
 
     face_locations = face_recognition.face_locations(small_frame, 1)
     face_landmarks = face_recognition.face_landmarks(small_frame, face_locations)
     for face in face_landmarks:
         for feature in face:
-            cv2.polylines(frame, np.array([face[feature]])*4, isClosed=False, color=(255,0,0), thickness=4)
+            if feature == 'chin':
+                cv2.polylines(frame, np.array([face[feature]])*4, isClosed=False, color=(45,45,45), thickness=4)
+            elif feature.endswith('eye'):
+                cv2.polylines(frame, np.array([face[feature]])*4, isClosed=False, color=(0,0,255), thickness=4)
+            else:
+                cv2.polylines(frame, np.array([face[feature]])*4, isClosed=False, color=(255,0,0), thickness=4)
 
     face_mean_x = []
     face_mean_y = []
@@ -77,7 +88,6 @@ while True:
             if ud_metric > 1.0:
                 ud = "down"
 
-
         oc_metric = math.sqrt((top_lip_x - bot_lip_x)**2 + (top_lip_y - bot_lip_y)**2)/face_sd
         oc = 'closed'
         if oc_metric >= 0.2:
@@ -111,22 +121,31 @@ while True:
             nom = True
         else:
             nom = False
-
-            
-        cv2.circle(frame, (nose_x*4, nose_y*4), 10, color=(0,0,255), thickness=4)
-        cv2.circle(frame, (top_lip_x*4, top_lip_y*4), 10, color=(0,0,255), thickness=4)
-        cv2.circle(frame, (bot_lip_x*4, bot_lip_y*4), 10, color=(0,0,255), thickness=4)
-
         print(lr.ljust(7),
               ud.ljust(7),
               oc_debounced.ljust(7),
               "{0: >6.3f}".format(lr_metric),
               "{0: >6.3f}".format(ud_metric),
               "{0: >6.3f}".format(oc_metric),
+              "{0:.1f}fps  ".format(len(fps)/5),
               end="\r")
 
+        cv2.circle(frame, (nose_x*4, nose_y*4), 10, color=(0,0,255), thickness=4)
+        cv2.circle(frame, (top_lip_x*4, top_lip_y*4), 5, color=(0,0,255), thickness=4)
+        cv2.circle(frame, (bot_lip_x*4, bot_lip_y*4), 5, color=(0,0,255), thickness=4)
+
+    for (top, right, bottom, left) in face_locations:
+        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+        top *= 4
+        right *= 4
+        bottom *= 4
+        left *= 4
+
+        # Draw a box around the face
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
     # Display the resulting image
-    cv2.imshow('Video', frame)
+    cv2.imshow('Video', cv2.flip(frame,1))
 
     # Hit 'q' on the keyboard to quit!
     key = cv2.waitKey(1) & 0xFF
