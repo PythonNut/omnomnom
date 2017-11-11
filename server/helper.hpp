@@ -13,33 +13,27 @@ public:
 	// returns the index of the tile in the indicated direction.
 	// currently returns -1 for any invalid input (off the grid, or 
 	// Direction::NONE as inputs.
+	
 	int nextTile(int position, Direction direction);
 	int getRow(int position);
 	int getCol(int position);
-	int getLeftTile(vector<int> map, int position);
-	int getAboveTile(vector<int> map, int position);
-	int getRightTile(vector<int> map, int position);
-	int getBottomTile(vector<int> map, int position);
+	int getLeftTile(int position);
+	int getAboveTile(int position);
+	int getRightTile(int position);
+	int getBottomTile(int position);
+	bool isWall(int position);
 	
-	
+	Helper();
+	void loadTiles(int width, int height, std::vector<int> tiles);
 private:
 	// number of columns in the grid
-	const int WIDTH = 8;
+	int WIDTH;
 	// number of rows in the grid
-	const int HEIGHT = 8;
+	int HEIGHT;
 
 	// a visualized grid of some random set of tiles
 	// 8s are walls, 1s are empty spaces
-	const std::vector<int> tiles{
-		8,8,8,8,8,8,8,8,
-		8,1,1,1,1,1,1,8,
-		8,1,8,8,1,8,1,8,
-		8,1,1,1,1,1,1,8,
-		8,8,1,8,8,8,1,8,
-		8,8,1,1,1,1,1,8,
-		8,8,1,8,8,1,8,8,
-		8,8,8,8,8,8,8,8
-	};
+	std::vector<int> tiles;
 
 
 };

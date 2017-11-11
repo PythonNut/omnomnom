@@ -37,53 +37,71 @@ int Helper::nextTile(int position, Direction direction)
 	}
 }
 
-int getRow(int position) {
+int Helper::getRow(int position) {
     //use int division to get the row
-    return position/WIDTH;
+    return position / WIDTH;
 }
 
-int getCol(int position) {
+int Helper::getCol(int position) {
     //use mods to get the column
-    return (postion % WIDTH);
+    return (position % WIDTH);
 }
 
-int getLeftTile(vector<int> map, int position) {
+int Helper::getLeftTile(int position) {
     //If on the far left side, loop to the right side
     if (position%WIDTH == 0) {
-        return map[position+WIDTH-1];
+        return tiles[position+WIDTH-1];
     }
     //Else return the tile directly to the left
     else {
-        return map[position-1];
+        return tiles[position-1];
     }
 }
 
-int getAboveTile(vector<int> map, int position) {
+int Helper::getAboveTile(int position) {
     // If on the top row, loop to the bottom
     if (position < WIDTH){
-        return map[(HEIGHT*WIDTH) - WIDTH + position];
+        return tiles[(HEIGHT*WIDTH) - WIDTH + position];
     }
     else {
-        return map[position-WIDTH];
+        return tiles[position-WIDTH];
     }
 }
 
-int getRightTile(vector<int> map, int position) {
+int Helper::getRightTile(int position) {
     // If on the far right row, loop to the left side
     if (position%WIDTH == (WIDTH-1)){
-        return map[position-WIDTH+1];
+        return tiles[position-WIDTH+1];
     }
     else{
-        return map[position+1];
+        return tiles[position+1];
     }
 }
 
-int getBottomTile(vector<int> map, int position) {
+int Helper::getBottomTile(int position) {
     // If on the Bottom Row, loop to the top
     if (position >= (HEIGHT*WIDTH)-WIDTH){
-        return map[(position%WIDTH)];
+        return tiles[(position%WIDTH)];
     }
     else {
-        return map[position+WIDTH];
+        return tiles[position+WIDTH];
     }
 }
+
+bool Helper::isWall(int position) {
+    if (position >= 7){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Helper::loadTiles(int width, int height, std::vector<int> tiles) {
+	WIDTH = width;
+	HEIGHT = height;
+	this->tiles = tiles;
+}
+
+Helper::Helper()
+{}
