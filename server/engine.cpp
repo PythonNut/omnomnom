@@ -7,7 +7,7 @@
 
 Engine::Engine()
 {
-	window.create(sf::VideoMode(1024, 768), "omnomnom");
+	window.create(sf::VideoMode(960, 832), "omnomnom");
 	window.setFramerateLimit(60);
 	
 	

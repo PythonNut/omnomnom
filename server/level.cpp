@@ -17,14 +17,37 @@ Level::Level()
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) }
 	};
 
+	dot.setRadius(10);
+	dot.setFillColor(sf::Color::White);
+	dot.setOrigin(10, 10);
+
 	shapes[1].setFillColor(sf::Color::Black);
+	shapes[7].setFillColor(sf::Color::Blue);
 	shapes[8].setFillColor(sf::Color::Cyan);
+	shapes[9].setFillColor(sf::Color::Cyan);
+	shapes[10].setFillColor(sf::Color::Cyan);
+	shapes[11].setFillColor(sf::Color::Cyan);
+	shapes[12].setFillColor(sf::Color::Cyan);
+	shapes[13].setFillColor(sf::Color::Cyan);
+	shapes[14].setFillColor(sf::Color::Cyan);
+	shapes[15].setFillColor(sf::Color::Cyan);
+	shapes[16].setFillColor(sf::Color::Cyan);
+	shapes[17].setFillColor(sf::Color::Cyan);
+	shapes[18].setFillColor(sf::Color::Cyan);
 
 	// init player
-	playerPos = { 75, 75 };
+	playerPos = { 96, 96 };
 
 	time = 0;
 	turnTime = 0;
@@ -34,27 +57,37 @@ Level::Level()
 	turnDirection = Direction::NONE;
 
 	//
-	ghosts = { Ghost{sf::Color::Color(255,160,0)} };
-
-	ghostPos = { {275, 325} };
-
-	ghostMovingDirection = { Direction::NONE };
-
-	ghostTurnDirection = { Direction::NONE };
-
-	ghostsMoving = { false };
-	tiles = { 
-		8,8,8,8,8,8,8,8,
-		8,1,1,1,1,1,1,8,
-		8,1,8,8,1,8,1,8,
-		8,1,1,1,1,1,1,8,
-		8,8,1,8,8,8,1,8,
-		8,8,1,1,1,1,1,8,
-		8,8,1,8,8,1,8,8,
-		8,8,8,8,8,8,8,8
+	ghosts = { 
+		Ghost{sf::Color::Color(255,160,0)},
+		Ghost{ sf::Color::Red },
+		Ghost{ sf::Color::Green },
+		Ghost{ sf::Color::Magenta}
 	};
 
-	helper.loadTiles(8, 8, tiles);
+	ghostPos = { {864, 736},{ 864, 736 },{ 864, 736 },{ 864, 736 } };
+
+	ghostMovingDirection = { Direction::NONE, Direction::NONE, Direction::NONE, Direction::NONE };
+
+	ghostTurnDirection = { Direction::NONE, Direction::NONE, Direction::NONE, Direction::NONE };
+
+	ghostsMoving = { false, false, false, false };
+	tiles = { 
+		10,7,7,7,7,7,7,7,7,7,7,7,7,7,11,
+		8,1,1,1,1,1,1,1,1,1,1,1,1,1,8,
+		8,1,10,7,7,7,15,1,10,7,7,7,15,1,8,
+		8,1,16,1,1,1,1,1,8,1,1,1,1,1,8,
+		8,1,1,1,17,7,15,1,8,1,10,7,15,1,8,
+		8,1,18,1,1,1,1,1,16,1,8,1,1,1,8,
+		8,1,12,7,7,7,11,1,1,1,8,1,14,1,8,
+		8,1,1,1,1,1,8,1,18,1,8,1,1,1,8,
+		8,1,17,7,15,1,8,1,8,1,12,7,15,1,8,
+		8,1,1,1,1,1,8,1,8,1,1,1,1,1,8,
+		8,1,17,7,7,7,13,1,12,7,7,7,15,1,8,
+		8,1,1,1,1,1,1,1,1,1,1,1,1,1,8,
+		12,7,7,7,7,7,7,7,7,7,7,7,7,7,13
+	};
+
+	helper.loadTiles(15, 13, tiles);
 
 
 	// init AI
@@ -65,10 +98,16 @@ Level::Level()
 
 void Level::drawWalls(sf::RenderWindow& window, float dt)
 {
-	for (int i = 0; i < 64; ++i) {
-		shapes[tiles[i]].setPosition((i % 8) * TILESIZE, (i / 8) * TILESIZE);
+	for (int i = 0; i < tiles.size(); ++i) {
+		shapes[tiles[i]].setPosition((i % WIDTH) * TILESIZE, (i / WIDTH) * TILESIZE);
 		window.draw(shapes[tiles[i]]);
+
+		if (tiles[i] == 1) {
+			dot.setPosition((i % WIDTH) * TILESIZE + TILESIZE / 2, (i / WIDTH) * TILESIZE + TILESIZE / 2);
+			window.draw(dot);
+		}
 	}
+
 }
 
 void Level::drawPlayer(sf::RenderWindow& window, float dt)
@@ -223,7 +262,6 @@ void Level::playerMove(float dt)
 
 		// also need to make sure not going along strange paths
 		if (tiles[helper.nextTile(getSquare(playerPos), movingDirection)] >= 7) {
-
 			// set position to snap to middle of tile
 			if (movingDirection == Direction::LEFT || movingDirection == Direction::RIGHT)
 				playerPos.x = int(playerPos.x / TILESIZE) * TILESIZE + TILESIZE / 2;
@@ -324,7 +362,7 @@ bool Level::willGhostCrossMiddle(Direction direction, int i, float dt)
 
 int Level::getSquare(sf::Vector2f pos)
 {
-	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * 8;
+	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * WIDTH;
 }
 
 sf::Vector2f Level::getPosInTile(sf::Vector2f pos)
@@ -344,7 +382,16 @@ void Level::update(float dt)
 	turnTime += dt;
 	
 	if (willGhostCrossMiddle(ghostMovingDirection[0], 0, dt) || ghostMovingDirection[0] == Direction::NONE) {
-		ghostInput(ai.pinky(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+		ghostInput(ai.clyde(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[1], 1, dt) || ghostMovingDirection[1] == Direction::NONE) {
+		ghostInput(ai.kinky(getSquare(playerPos), getSquare(ghostPos[1]), ghostMovingDirection[1]), 1);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[2], 2, dt) || ghostMovingDirection[2] == Direction::NONE) {
+		ghostInput(ai.pinky(getSquare(playerPos), getSquare(ghostPos[2]), ghostMovingDirection[2]), 2);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[3], 3, dt) || ghostMovingDirection[3] == Direction::NONE) {
+		ghostInput(ai.dinky(getSquare(playerPos), getSquare(ghostPos[3]), ghostMovingDirection[3]), 3);
 	}
 	for (int k = 0; k < ghosts.size(); ++k) {
 		ghostMove(dt, k);
@@ -451,7 +498,6 @@ void Level::ghostMove(float dt, int i)
 				case Direction::LEFT:
 				{
 					float preTurn = ghostPos[i].x - int(ghostPos[i].x / TILESIZE) * TILESIZE - TILESIZE / 2;
-					std::cout << dt << " " << preTurn << std::endl;
 					ghostPos[i].x = int(ghostPos[i].x / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::DOWN)
