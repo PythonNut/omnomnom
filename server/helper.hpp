@@ -21,6 +21,7 @@ public:
 	int getAboveTile(std::vector<int> map, int position);
 	int getRightTile(std::vector<int> map, int position);
 	int getBottomTile(std::vector<int> map, int position);
+	bool isWall(std::vector<int> map, int position);
 	
 	Helper();
 	void loadTiles(int width, int height, std::vector<int> tiles);
