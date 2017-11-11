@@ -25,6 +25,7 @@ private:
 	sf::CircleShape dot;
 
 	int score;
+	sf::Font font;
 	sf::Text scoreText;
 
 

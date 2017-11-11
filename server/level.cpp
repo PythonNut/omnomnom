@@ -121,6 +121,12 @@ Level::Level()
 	gameIsOver = false;
 
 	score = 0;
+	font.loadFromFile("images/PressStart2P.ttf");
+	scoreText.setFont(font);
+	scoreText.setCharacterSize(40);
+	scoreText.setString(std::to_string(0));
+	scoreText.setPosition(800,10);
+	scoreText.setFillColor(sf::Color::Blue);
 }
 
 void Level::drawWalls(sf::RenderWindow& window, float dt)
@@ -141,6 +147,8 @@ void Level::drawWalls(sf::RenderWindow& window, float dt)
 			window.draw(dot);
 		}
 	}
+	scoreText.setString(std::to_string(score));
+	window.draw(scoreText);
 
 }
 
