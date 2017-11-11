@@ -57,15 +57,20 @@ Level::Level()
 	turnDirection = Direction::NONE;
 
 	//
-	ghosts = { Ghost{sf::Color::Color(255,160,0)} };
+	ghosts = { 
+		Ghost{sf::Color::Color(255,160,0)},
+		Ghost{ sf::Color::Red },
+		Ghost{ sf::Color::Green },
+		Ghost{ sf::Color::Magenta}
+	};
 
-	ghostPos = { {275, 325} };
+	ghostPos = { {864, 736},{ 864, 736 },{ 864, 736 },{ 864, 736 } };
 
-	ghostMovingDirection = { Direction::NONE };
+	ghostMovingDirection = { Direction::NONE, Direction::NONE, Direction::NONE, Direction::NONE };
 
-	ghostTurnDirection = { Direction::NONE };
+	ghostTurnDirection = { Direction::NONE, Direction::NONE, Direction::NONE, Direction::NONE };
 
-	ghostsMoving = { false };
+	ghostsMoving = { false, false, false, false };
 	tiles = { 
 		10,7,7,7,7,7,7,7,7,7,7,7,7,7,11,
 		8,1,1,1,1,1,1,1,1,1,1,1,1,1,8,
@@ -82,7 +87,7 @@ Level::Level()
 		12,7,7,7,7,7,7,7,7,7,7,7,7,7,13
 	};
 
-	helper.loadTiles(13, 15, tiles);
+	helper.loadTiles(15, 13, tiles);
 
 
 	// init AI
@@ -257,7 +262,6 @@ void Level::playerMove(float dt)
 
 		// also need to make sure not going along strange paths
 		if (tiles[helper.nextTile(getSquare(playerPos), movingDirection)] >= 7) {
-
 			// set position to snap to middle of tile
 			if (movingDirection == Direction::LEFT || movingDirection == Direction::RIGHT)
 				playerPos.x = int(playerPos.x / TILESIZE) * TILESIZE + TILESIZE / 2;
@@ -358,7 +362,6 @@ bool Level::willGhostCrossMiddle(Direction direction, int i, float dt)
 
 int Level::getSquare(sf::Vector2f pos)
 {
-	std::cout << int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * WIDTH << std::endl;
 	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * WIDTH;
 }
 
@@ -379,7 +382,16 @@ void Level::update(float dt)
 	turnTime += dt;
 	
 	if (willGhostCrossMiddle(ghostMovingDirection[0], 0, dt) || ghostMovingDirection[0] == Direction::NONE) {
-		ghostInput(ai.pinky(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+		ghostInput(ai.clyde(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[1], 1, dt) || ghostMovingDirection[1] == Direction::NONE) {
+		ghostInput(ai.kinky(getSquare(playerPos), getSquare(ghostPos[1]), ghostMovingDirection[1]), 1);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[2], 2, dt) || ghostMovingDirection[2] == Direction::NONE) {
+		ghostInput(ai.pinky(getSquare(playerPos), getSquare(ghostPos[2]), ghostMovingDirection[2]), 2);
+	}
+	if (willGhostCrossMiddle(ghostMovingDirection[3], 3, dt) || ghostMovingDirection[3] == Direction::NONE) {
+		ghostInput(ai.dinky(getSquare(playerPos), getSquare(ghostPos[3]), ghostMovingDirection[3]), 3);
 	}
 	for (int k = 0; k < ghosts.size(); ++k) {
 		ghostMove(dt, k);
@@ -486,7 +498,6 @@ void Level::ghostMove(float dt, int i)
 				case Direction::LEFT:
 				{
 					float preTurn = ghostPos[i].x - int(ghostPos[i].x / TILESIZE) * TILESIZE - TILESIZE / 2;
-					std::cout << dt << " " << preTurn << std::endl;
 					ghostPos[i].x = int(ghostPos[i].x / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::DOWN)

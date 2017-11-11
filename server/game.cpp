@@ -41,7 +41,7 @@ void Game::handleInput(sf::RenderWindow& window)
 			{
 				// do up
 				level.input(Direction::UP);
-				std::cout << "up" << std::endl;
+				//std::cout << "up" << std::endl;
 			}
 			break;
 		}
