@@ -59,6 +59,8 @@ Level::Level()
 
 	// init AI
 	ai = AI(helper);
+
+	gameIsOver = false;
 }
 
 void Level::drawWalls(sf::RenderWindow& window, float dt)
@@ -331,6 +333,11 @@ sf::Vector2f Level::getPosInTile(sf::Vector2f pos)
 		pos.y - int(pos.y / TILESIZE) * TILESIZE);
 }
 
+bool Level::isGameOver()
+{
+	return gameIsOver;
+}
+
 void Level::update(float dt)
 {
 	time += dt;
@@ -361,12 +368,10 @@ void Level::update(float dt)
 	}
 
 
-
-
 	// detect whether colision with a ghost.
 	for (int k = 0; k < ghosts.size(); ++k) {
 		if (sqrt(pow(ghostPos[k].x - playerPos.x, 2) + pow(ghostPos[k].y - playerPos.y, 2)) < TILESIZE)
-			std::cout << "COLLIDE";
+			gameIsOver = true;
 	}
 
 }

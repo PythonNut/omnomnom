@@ -48,7 +48,7 @@ private:
 	sf::Vector2f getPosInTile(sf::Vector2f pos);
 	bool willCrossMiddle(Direction direction, float dt);
 	bool willGhostCrossMiddle(Direction direction, int i, float dt);
-
+	bool gameIsOver;
 public:
 	const int TILESIZE = 50;
 	const int SPEED = 150;
@@ -69,6 +69,8 @@ public:
 	void input(Direction direction);
 
 	void update(float dt);
+
+	bool isGameOver();
 
 
 	float time;

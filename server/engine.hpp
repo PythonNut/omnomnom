@@ -1,22 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 
-#include "level.hpp"
+
+class State;
 
 class Engine
 {
 private:
 
-	Level level;
-	void handleInput();
-	void update(float dt);
-	void draw(float dt);
-
-
 public:
 	void loop();
 	sf::RenderWindow window;
-
-
+	std::vector<State*> states;
+	State* getState();
+	void pushState(State* state);
+	int state;
 	Engine();
 };
