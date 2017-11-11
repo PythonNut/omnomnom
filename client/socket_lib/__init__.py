@@ -20,7 +20,7 @@ class ClientSocket:
         """
         close the connection on destruction
         """
-        self.sock.shutdown()
+        self.sock.shutdown(socket.SHUT_RDWR)
         self.sock.close()
 
     def send(self, msg):
