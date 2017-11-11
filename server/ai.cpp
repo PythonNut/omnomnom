@@ -28,17 +28,21 @@ Direction AI::clyde(int pacPosition, int clydePosition, Direction clydeDir)
     }
     int s = validDirections.size();
     if (s == 0){
-		return Direction::NONE;
+        //If this line runs, there is significant trouble
+        return None
     }
-    else if(clydeDir == Direction::NONE){
+    else if(clydeDir == None){
+        clydesConscious = true;
         int index = rand()%s;
         return validDirections[index];
     }
-    else if (s>2){
+    else if ((s>2 && !clydesConscious){
+        clydesConscious = true;
         int index = rand()%s;
         return validDirections[index];
     }
     else {
+        clydesConscious = false;
         return clydeDir;
     }
 }
