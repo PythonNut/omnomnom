@@ -11,7 +11,7 @@ private:
 public:
 	virtual void draw(sf::RenderWindow& window, const float dt);
 	virtual void update(Engine* engine, const float dt);
-	virtual void handleInput(sf::RenderWindow& window);
+	virtual void handleInput(Engine* engine, sf::RenderWindow& window);
 
 	Game();
 };

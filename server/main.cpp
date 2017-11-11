@@ -6,7 +6,7 @@
 int main() {
 	Engine engine;
 
-	engine.pushState(new Menu);
+	engine.pushState(new Menu("images/startscreen.png"));
 	engine.pushState(new Game);
 	engine.pushState(new Menu);
 	engine.loop();

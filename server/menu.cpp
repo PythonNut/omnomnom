@@ -1,7 +1,7 @@
 #include "menu.hpp"
 #include <SFML/Graphics.hpp>
 
-void Menu::handleInput(sf::RenderWindow& window)
+void Menu::handleInput(Engine* engine, sf::RenderWindow& window)
 {
 	
 	sf::Event event;
@@ -51,7 +51,6 @@ Menu::Menu()
 Menu::Menu(const std::string& filename)
 {
 	moveOn = false;
-
-	ts = Texprite(filename, sf::IntRect(0, 0, 960, 832), 1);
-	sprite.setTexture(ts.tex);
+	textures.loadTexture("bg", filename);
+	sprite.setTexture(textures.getTexture("bg"));
 }

@@ -1,7 +1,7 @@
 #include "game.hpp"
-#include <iostream>
 
-void Game::handleInput(sf::RenderWindow& window)
+
+void Game::handleInput(Engine* engine, sf::RenderWindow& window)
 {
 	// remove this code once we have actual input!
 	sf::Event event;
@@ -49,6 +49,36 @@ void Game::handleInput(sf::RenderWindow& window)
 		}
 	}
 
+	switch (engine->getInput())
+		{
+		case 1:
+		{
+			level.input(Direction::LEFT);
+			break;
+		}
+		case 2:
+		{
+			level.input(Direction::RIGHT);
+			break;
+		}
+		case 3:
+		{
+			level.input(Direction::UP);
+			break;
+		}
+		case 4:
+		{
+			level.input(Direction::DOWN);
+			break;
+		}
+		default:
+			break;
+	}
+
+	
+
+
+
 
 }
 
@@ -70,3 +100,5 @@ void Game::update(Engine* engine, float dt)
 Game::Game()
 {
 }
+
+
