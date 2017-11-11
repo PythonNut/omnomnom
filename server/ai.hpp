@@ -1,18 +1,17 @@
-
-
-
 #pragma once
 
 #include "helper.hpp"
 #include <stdlib.h>
 
-class ai
+class AI
 {
 public:
-    ai();
+    AI();
+	AI(Helper& helper);
 
-    Direction clyde(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir);
-    Direction spasy(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir);
+    Direction clyde(int pacPosition, int clydePosition, Direction clydeDir);
+    Direction spasy(int pacPosition, int clydePosition, Direction clydeDir);
 private:
+	Helper helper;
 
-}
+};

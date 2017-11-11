@@ -14,7 +14,7 @@ Level::Level()
 	shapes[1].setFillColor(sf::Color::Black);
 	shapes[0].setFillColor(sf::Color::Cyan);
 
-
+	// init player
 	playerPos = { 75, 75 };
 
 	time = 0;
@@ -24,7 +24,18 @@ Level::Level()
 	movingDirection = Direction::NONE;
 	turnDirection = Direction::NONE;
 
-	tiles = { 0,0,0,0,0,0,0,0,
+	//
+	ghosts = { Ghost{sf::Color::Color(255,160,0)} };
+
+	ghostPos = { {275, 325} };
+
+	ghostMovingDirection = { Direction::NONE };
+
+	ghostTurnDirection = { Direction::NONE };
+	// init AI
+	ai = AI(helper);
+	tiles = { 
+		0,0,0,0,0,0,0,0,
 		0,1,1,1,1,1,1,0,
 		0,1,0,0,1,0,1,0,
 		0,1,1,1,1,1,1,0,
@@ -67,11 +78,11 @@ void Level::input(Direction direction)
 			(turnDirection == Direction::LEFT || turnDirection == Direction::RIGHT)) {
 			// now check whether we're close (TILESIZE/3) from being at a turn, and if so, then make it do that
 			float offset = playerPos.y - int(playerPos.y / TILESIZE) * TILESIZE - TILESIZE / 2;
-			if (offset > 0 && offset < TILESIZE / 2 && tiles[helper.nextTile(getSquare(), turnDirection)] == 1) {
+			if (offset > 0 && offset < TILESIZE / 2 && tiles[helper.nextTile(getSquare(playerPos), turnDirection)] == 1) {
 				movingDirection = Direction::UP;
 				time = 0;
 			}
-			else if (offset < 0 && offset > TILESIZE / (-2) && tiles[helper.nextTile(getSquare(), turnDirection)] == 1) {
+			else if (offset < 0 && offset > TILESIZE / (-2) && tiles[helper.nextTile(getSquare(playerPos), turnDirection)] == 1) {
 				movingDirection = Direction::DOWN;
 				time = 0;
 			}
@@ -84,11 +95,11 @@ void Level::input(Direction direction)
 		else if (playerPos.x - int(playerPos.x / TILESIZE) * TILESIZE != TILESIZE / 2 &&
 			(turnDirection == Direction::UP || turnDirection == Direction::DOWN)) {
 			float offset = playerPos.x - int(playerPos.x / TILESIZE) * TILESIZE - TILESIZE / 2;
-			if (offset > 0 && offset < TILESIZE / 2 && tiles[helper.nextTile(getSquare(), turnDirection)] == 1) {
+			if (offset > 0 && offset < TILESIZE / 2 && tiles[helper.nextTile(getSquare(playerPos), turnDirection)] == 1) {
 				movingDirection = Direction::LEFT;
 				time = 0;
 			}
-			else if (offset < 0 && offset > TILESIZE / (-2) && tiles[helper.nextTile(getSquare(), turnDirection)] == 1) {
+			else if (offset < 0 && offset > TILESIZE / (-2) && tiles[helper.nextTile(getSquare(playerPos), turnDirection)] == 1) {
 				movingDirection = Direction::RIGHT;
 				time = 0;
 			}
@@ -128,7 +139,7 @@ void Level::playerMove(float dt)
 		// if there is a turn queued:
 		if (turnDirection != movingDirection) {
 			// if there is a tile to turn onto:
-			if (tiles[helper.nextTile(getSquare(), turnDirection)] == 1) {
+			if (tiles[helper.nextTile(getSquare(playerPos), turnDirection)] == 1) {
 				// turn
 				switch (movingDirection)
 				{
@@ -189,7 +200,7 @@ void Level::playerMove(float dt)
 		// check that it can cross the middle
 
 		// also need to make sure not going along strange paths
-		if (tiles[helper.nextTile(getSquare(), movingDirection)] != 1) {
+		if (tiles[helper.nextTile(getSquare(playerPos), movingDirection)] != 1) {
 
 			// set position to snap to middle of tile
 			if (movingDirection == Direction::LEFT || movingDirection == Direction::RIGHT)
@@ -237,38 +248,38 @@ bool Level::willCrossMiddle(Direction direction, float dt)
 	{
 	case Direction::LEFT:
 	{
-		return getPosInTile().x >= TILESIZE / 2 &&
-			getPosInTile().x - dt * SPEED < TILESIZE / 2;
+		return getPosInTile(playerPos).x >= TILESIZE / 2 &&
+			getPosInTile(playerPos).x - dt * SPEED < TILESIZE / 2;
 	}
 	case Direction::RIGHT:
 	{
-		return getPosInTile().x <= TILESIZE / 2 &&
-			getPosInTile().x + dt * SPEED > TILESIZE / 2;
+		return getPosInTile(playerPos).x <= TILESIZE / 2 &&
+			getPosInTile(playerPos).x + dt * SPEED > TILESIZE / 2;
 	}
 	case Direction::DOWN:
 	{
-		return getPosInTile().y <= TILESIZE / 2 &&
-			getPosInTile().y + dt * SPEED > TILESIZE / 2;
+		return getPosInTile(playerPos).y <= TILESIZE / 2 &&
+			getPosInTile(playerPos).y + dt * SPEED > TILESIZE / 2;
 	}
 	case Direction::UP:
 	{
-		return getPosInTile().y >= TILESIZE / 2 &&
-			getPosInTile().y - dt * SPEED < TILESIZE / 2;
+		return getPosInTile(playerPos).y >= TILESIZE / 2 &&
+			getPosInTile(playerPos).y - dt * SPEED < TILESIZE / 2;
 	}
 	default:
 		return false;
 	}
 }
 
-int Level::getSquare()
+int Level::getSquare(sf::Vector2f pos)
 {
-	return int(playerPos.x) / TILESIZE + (int(playerPos.y) / TILESIZE) * 8;
+	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * 8;
 }
 
-sf::Vector2f Level::getPosInTile()
+sf::Vector2f Level::getPosInTile(sf::Vector2f pos)
 {
-	return sf::Vector2f(playerPos.x - int(playerPos.x / TILESIZE) * TILESIZE,
-		playerPos.y - int(playerPos.y / TILESIZE) * TILESIZE);
+	return sf::Vector2f(pos.x - int(pos.x / TILESIZE) * TILESIZE,
+		pos.y - int(pos.y / TILESIZE) * TILESIZE);
 }
 
 void Level::update(float dt)

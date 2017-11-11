@@ -3,6 +3,8 @@
 #include <vector>
 #include "helper.hpp"
 #include "player.hpp"
+#include "ghost.hpp"
+#include "ai.hpp"
 
 
 #include <SFML/Graphics.hpp>
@@ -16,9 +18,10 @@ private:
 	std::vector<int> tiles;
 
 	// this will need to change to accomodate textures
-	std::vector<sf::RectangleShape> shapes;
-	sf::Vector2f playerPos;
+	std::vector<sf::RectangleShape> shapes; // these are grid textures
 
+	// player stuff
+	sf::Vector2f playerPos;
 	Player player;
 	Direction movingDirection;
 	Direction turnDirection;
@@ -28,9 +31,20 @@ private:
 	// movement helpers
 	void playerMove(float dt);
 
+	// and the same for ghosts...
+	std::vector<sf::Vector2f> ghostPos;
+	std::vector<Ghost> ghosts;
+	std::vector<Direction> ghostMovingDirection;
+	std::vector<Direction> ghostTurnDirection;
+
+	void ghostMove(Ghost ghost, float dt);
+
+	// AI
+	AI ai;
+
 	// other helpers
-	int getSquare();
-	sf::Vector2f getPosInTile();
+	int getSquare(sf::Vector2f pos);
+	sf::Vector2f getPosInTile(sf::Vector2f pos);
 	bool willCrossMiddle(Direction direction, float dt);
 
 public:

@@ -47,48 +47,48 @@ int Helper::getCol(int position) {
     return (position % WIDTH);
 }
 
-int Helper::getLeftTile(std::vector<int> map, int position) {
+int Helper::getLeftTile(int position) {
     //If on the far left side, loop to the right side
     if (position%WIDTH == 0) {
-        return map[position+WIDTH-1];
+        return tiles[position+WIDTH-1];
     }
     //Else return the tile directly to the left
     else {
-        return map[position-1];
+        return tiles[position-1];
     }
 }
 
-int Helper::getAboveTile(std::vector<int> map, int position) {
+int Helper::getAboveTile(int position) {
     // If on the top row, loop to the bottom
     if (position < WIDTH){
-        return map[(HEIGHT*WIDTH) - WIDTH + position];
+        return tiles[(HEIGHT*WIDTH) - WIDTH + position];
     }
     else {
-        return map[position-WIDTH];
+        return tiles[position-WIDTH];
     }
 }
 
-int Helper::getRightTile(std::vector<int> map, int position) {
+int Helper::getRightTile(int position) {
     // If on the far right row, loop to the left side
     if (position%WIDTH == (WIDTH-1)){
-        return map[position-WIDTH+1];
+        return tiles[position-WIDTH+1];
     }
     else{
-        return map[position+1];
+        return tiles[position+1];
     }
 }
 
-int Helper::getBottomTile(std::vector<int> map, int position) {
+int Helper::getBottomTile(int position) {
     // If on the Bottom Row, loop to the top
     if (position >= (HEIGHT*WIDTH)-WIDTH){
-        return map[(position%WIDTH)];
+        return tiles[(position%WIDTH)];
     }
     else {
-        return map[position+WIDTH];
+        return tiles[position+WIDTH];
     }
 }
 
-bool isWall(std::vector<int> map, int position){
+bool Helper::isWall(int position) {
     if (position >= 7){
         return true;
     }

@@ -17,11 +17,11 @@ public:
 	int nextTile(int position, Direction direction);
 	int getRow(int position);
 	int getCol(int position);
-	int getLeftTile(std::vector<int> map, int position);
-	int getAboveTile(std::vector<int> map, int position);
-	int getRightTile(std::vector<int> map, int position);
-	int getBottomTile(std::vector<int> map, int position);
-	bool isWall(std::vector<int> map, int position);
+	int getLeftTile(int position);
+	int getAboveTile(int position);
+	int getRightTile(int position);
+	int getBottomTile(int position);
+	bool isWall(int position);
 	
 	Helper();
 	void loadTiles(int width, int height, std::vector<int> tiles);

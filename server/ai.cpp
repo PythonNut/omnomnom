@@ -1,25 +1,29 @@
-
 #include "ai.hpp"
 
 
-Ai::Ai()
+AI::AI()
 {
     //Nothing to Do
 }
 
-Direction Ai::clyde(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir)
+AI::AI(Helper& helper)
+{
+	this->helper = helper;
+}
+
+Direction AI::clyde(int pacPosition, int clydePosition, Direction clydeDir)
 {   
     std::vector<Direction> validDirections;
-    if !(isWall(getAboveTile(clydePosition))){
+    if (!helper.isWall(helper.getAboveTile(clydePosition))){
         validDirections.push_back(Direction::UP);
     }
-    if !(isWall(getRightTile(clydePosition))){
+    if (!helper.isWall(helper.getRightTile(clydePosition))){
         validDirections.push_back(Direction::RIGHT);
     }
-    if !(isWall(getBottomTile(clydePosition))){
+    if (!helper.isWall(helper.getBottomTile(clydePosition))){
         validDirections.push_back(Direction::DOWN);
     }     
-    if !(isWall(getLeftTile(clydePosition))){
+    if (!helper.isWall(helper.getLeftTile(clydePosition))){
         validDirections.push_back(Direction::LEFT);
     }
     int s = validDirections.size();
@@ -32,19 +36,19 @@ Direction Ai::clyde(std::vector<int> map, int pacPosition, int clydePosition, Di
     }
 }
 
-Direction Ai::spasy(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir)
+Direction AI::spasy(int pacPosition, int clydePosition, Direction clydeDir)
 {
     std::vector<Direction> validDirections;
-    if !(isWall(getAboveTile(clydePosition))){
+    if (!helper.isWall(helper.getAboveTile(clydePosition))){
         validDirections.push_back(Direction::UP);
     }
-    if !(isWall(getRightTile(clydePosition))){
+    if (!helper.isWall(helper.getRightTile(clydePosition))){
         validDirections.push_back(Direction::RIGHT);
     }
-    if !(isWall(getBottomTile(clydePosition))){
+    if (!helper.isWall(helper.getBottomTile(clydePosition))){
         validDirections.push_back(Direction::DOWN);
     }     
-    if !(isWall(getLeftTile(clydePosition))){
+    if (!helper.isWall(helper.getLeftTile(clydePosition))){
         validDirections.push_back(Direction::LEFT);
     }
     int s = validDirections.size();
