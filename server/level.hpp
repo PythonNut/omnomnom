@@ -47,10 +47,12 @@ private:
 	int getSquare(sf::Vector2f pos);
 	sf::Vector2f getPosInTile(sf::Vector2f pos);
 	bool willCrossMiddle(Direction direction, float dt);
+	bool willGhostCrossMiddle(Direction direction, float dt);
 
 public:
 	const int TILESIZE = 50;
 	const int SPEED = 150;
+	const int GHOSTSPEED = 100;
 	const int HEIGHT = 8;
 	const int WIDTH = 8;
 	const float TIMELIMIT = 1;

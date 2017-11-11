@@ -291,6 +291,35 @@ bool Level::willCrossMiddle(Direction direction, float dt)
 	}
 }
 
+bool Level::willGhostCrossMiddle(Direction direction, float dt)
+{
+	switch (direction)
+	{
+	case Direction::LEFT:
+	{
+		return getPosInTile(playerPos).x >= TILESIZE / 2 &&
+			getPosInTile(playerPos).x - dt * GHOSTSPEED < TILESIZE / 2;
+	}
+	case Direction::RIGHT:
+	{
+		return getPosInTile(playerPos).x <= TILESIZE / 2 &&
+			getPosInTile(playerPos).x + dt * GHOSTSPEED > TILESIZE / 2;
+	}
+	case Direction::DOWN:
+	{
+		return getPosInTile(playerPos).y <= TILESIZE / 2 &&
+			getPosInTile(playerPos).y + dt * GHOSTSPEED > TILESIZE / 2;
+	}
+	case Direction::UP:
+	{
+		return getPosInTile(playerPos).y >= TILESIZE / 2 &&
+			getPosInTile(playerPos).y - dt * GHOSTSPEED < TILESIZE / 2;
+	}
+	default:
+		return false;
+	}
+}
+
 int Level::getSquare(sf::Vector2f pos)
 {
 	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * 8;
@@ -306,12 +335,12 @@ void Level::update(float dt)
 {
 	time += dt;
 	turnTime += dt;
-
-	ghostInput(ai.clyde(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+	if (willGhostCrossMiddle(ghostMovingDirection[0], dt) || ghostMovingDirection[0] == Direction::NONE) {
+		ghostInput(ai.clyde(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+	}
 
 	for (int k = 0; k < ghosts.size(); ++k) {
 		ghostMove(dt, k);
-
 		ghosts[k].update(ghostMovingDirection[k], dt);
 	}
 
@@ -396,7 +425,7 @@ void Level::ghostInput(Direction direction, int i)
 void Level::ghostMove(float dt, int i)
 {
 	if (!ghostsMoving[i]) return;
-	if (willCrossMiddle(ghostMovingDirection[i], dt)) {
+	if (willGhostCrossMiddle(ghostMovingDirection[i], dt)) {
 		// if there is a turn queued:
 		if (ghostTurnDirection[i] != ghostMovingDirection[i]) {
 			// if there is a tile to turn onto:
@@ -410,9 +439,9 @@ void Level::ghostMove(float dt, int i)
 					ghostPos[i].x = int(ghostPos[i].x / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::DOWN)
-						ghostPos[i].y += (dt * SPEED - preTurn);
+						ghostPos[i].y += (dt * GHOSTSPEED - preTurn);
 					if (ghostTurnDirection[i] == Direction::UP)
-						ghostPos[i].y -= (dt * SPEED - preTurn);
+						ghostPos[i].y -= (dt * GHOSTSPEED - preTurn);
 					break;
 				}
 				case Direction::RIGHT:
@@ -421,9 +450,9 @@ void Level::ghostMove(float dt, int i)
 					ghostPos[i].x = int(ghostPos[i].x / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::DOWN)
-						ghostPos[i].y += (dt * SPEED - preTurn);
+						ghostPos[i].y += (dt * GHOSTSPEED - preTurn);
 					if (ghostTurnDirection[i] == Direction::UP)
-						ghostPos[i].y -= (dt * SPEED - preTurn);
+						ghostPos[i].y -= (dt * GHOSTSPEED - preTurn);
 					break;
 				}
 				case Direction::DOWN:
@@ -432,9 +461,9 @@ void Level::ghostMove(float dt, int i)
 					ghostPos[i].y = int(ghostPos[i].y / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::RIGHT)
-						ghostPos[i].x += (dt * SPEED - preTurn);
+						ghostPos[i].x += (dt * GHOSTSPEED - preTurn);
 					if (ghostTurnDirection[i] == Direction::LEFT)
-						ghostPos[i].x -= (dt * SPEED - preTurn);
+						ghostPos[i].x -= (dt * GHOSTSPEED - preTurn);
 					break;
 				}
 				case Direction::UP:
@@ -443,9 +472,9 @@ void Level::ghostMove(float dt, int i)
 					ghostPos[i].y = int(ghostPos[i].y / TILESIZE) * TILESIZE + TILESIZE / 2;
 
 					if (ghostTurnDirection[i] == Direction::DOWN)
-						ghostPos[i].x += (dt * SPEED - preTurn);
+						ghostPos[i].x += (dt * GHOSTSPEED - preTurn);
 					if (ghostTurnDirection[i] == Direction::UP)
-						ghostPos[i].x -= (dt * SPEED - preTurn);
+						ghostPos[i].x -= (dt * GHOSTSPEED - preTurn);
 					break;
 				}
 				default:
@@ -478,22 +507,22 @@ void Level::ghostMove(float dt, int i)
 	{
 	case Direction::LEFT:
 	{
-		ghostPos[i].x -= dt * SPEED;
+		ghostPos[i].x -= dt * GHOSTSPEED;
 		return;
 	}
 	case Direction::RIGHT:
 	{
-		ghostPos[i].x += dt * SPEED;
+		ghostPos[i].x += dt * GHOSTSPEED;
 		return;
 	}
 	case Direction::DOWN:
 	{
-		ghostPos[i].y += dt * SPEED;
+		ghostPos[i].y += dt * GHOSTSPEED;
 		return;
 	}
 	case Direction::UP:
 	{
-		ghostPos[i].y -= dt * SPEED;
+		ghostPos[i].y -= dt * GHOSTSPEED;
 		return;
 	}
 	default:
