@@ -11,6 +11,50 @@ AI::AI(Helper& helper)
 	this->helper = helper;
 }
 
+Direction AI::dinky(int pacPosition, int dinkyPosition, Direction dinkyDir){
+    int dx = helper.getCol(dinkyPosition);
+    int px = helper.getCol(pacPosition);
+    int dy = helper.getRow(dinkyPosition);
+    int py = helper.getRow(pacPosition);
+
+    if (px>dx) {
+        return Direction::RIGHT;
+    }
+    else if (dx>px) {
+        return Direction::LEFT;
+    }
+    else {
+        if (dy>py){
+            return Direction::UP;
+        }
+        else {
+            return Direction::DOWN;
+        }
+    }
+}
+
+Direction AI::pinky(int pacPosition, int pinkyPosition, Direction pinkyDir){
+    int piy = helper.getRow(pinkyPosition);
+    int pay = helper.getRow(pacPosition);
+    int pix = helper.getCol(pinkyPosition);
+    int pax = helper.getCol(pacPosition);
+
+    if (pay>piy) {
+        return Direction::DOWN;
+    }
+    else if (piy>pay) {
+        return Direction::UP;
+    }
+    else {
+        if (pix>pax){
+            return Direction::LEFT;
+        }
+        else {
+            return Direction::RIGHT;
+        }
+    }
+}
+
 Direction AI::kinky(int pacPosition, int inkyPosition, Direction inkyDir)
 {
     std::vector<Direction> validDirections;

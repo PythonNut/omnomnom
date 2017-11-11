@@ -10,11 +10,11 @@ class ClientSocket:
         creates a socket and starts a connection
         """
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.PORT = 8001
+        self.PORT = 2222
         # connect on construction,
         # use for duration of a game,
         # close connection on destruction later
-        self.sock.connect((socket.gethostname(), self.PORT))
+        self.sock.connect(("192.168.43.67", self.PORT))
 
     def __del__(self):
         """
@@ -31,6 +31,7 @@ class ClientSocket:
        """
        # keep track of the total sent
        # so we can make sure the whole message is sent
+       msg = (msg+'\n').encode('utf-8')
        totalsent = 0
        while totalsent < len(msg):
            sent = self.sock.send(msg[totalsent:])
