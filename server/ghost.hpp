@@ -13,9 +13,11 @@ public:
 	void draw(sf::RenderWindow& window, float dt);
 	void update(Direction direction, float dt);
 	sf::Sprite sprite;
+
 	Texprite ts;
 	sf::CircleShape shape;
 	Ghost();
+	Ghost(sf::Texture& tex);
 	Ghost(sf::Color color);
 	Ghost(const std::string& filename);
 };

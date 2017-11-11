@@ -5,6 +5,13 @@
 
 Level::Level()
 {
+
+	textures.loadTexture("cmc", "images/cmc.png");
+	textures.loadTexture("hmc", "images/hmc.png");
+	textures.loadTexture("pom", "images/pom.png");
+	textures.loadTexture("pz", "images/pz.png");
+	textures.loadTexture("scripps", "images/scripps.png");
+	textures.loadTexture("genwall", "images/wart.png");
 	// maybe changhe this later
 	shapes = {
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
@@ -28,6 +35,29 @@ Level::Level()
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) }
 	};
 
+	wallsprites = {
+		sf::Sprite{textures.getTexture("genwall")},
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+		sf::Sprite{ textures.getTexture("genwall") },
+	};
+
 	dot.setRadius(10);
 	dot.setFillColor(sf::Color::White);
 	dot.setOrigin(10, 10);
@@ -36,15 +66,7 @@ Level::Level()
 	shapes[7].setFillColor(sf::Color::Blue);
 	shapes[8].setFillColor(sf::Color::Cyan);
 	shapes[9].setFillColor(sf::Color::Cyan);
-	shapes[10].setFillColor(sf::Color::Cyan);
-	shapes[11].setFillColor(sf::Color::Cyan);
-	shapes[12].setFillColor(sf::Color::Cyan);
-	shapes[13].setFillColor(sf::Color::Cyan);
-	shapes[14].setFillColor(sf::Color::Cyan);
-	shapes[15].setFillColor(sf::Color::Cyan);
-	shapes[16].setFillColor(sf::Color::Cyan);
-	shapes[17].setFillColor(sf::Color::Cyan);
-	shapes[18].setFillColor(sf::Color::Cyan);
+
 
 	// init player
 	playerPos = { 96, 96 };
@@ -58,11 +80,14 @@ Level::Level()
 
 	//
 	ghosts = { 
-		Ghost{sf::Color::Color(255,160,0)},
-		Ghost{ sf::Color::Red },
-		Ghost{ sf::Color::Green },
-		Ghost{ sf::Color::Magenta}
+		Ghost{ textures.getTexture("cmc") },
+		Ghost{ textures.getTexture("hmc") },
+		Ghost{ textures.getTexture("pom") },
+		Ghost{ textures.getTexture("pz") },
+		Ghost{ textures.getTexture("scripps") }
 	};
+
+	ghosts.erase(std::next(ghosts.begin(), rand() % 5));
 
 	ghostPos = { {864, 736},{ 864, 736 },{ 864, 736 },{ 864, 736 } };
 
@@ -99,8 +124,15 @@ Level::Level()
 void Level::drawWalls(sf::RenderWindow& window, float dt)
 {
 	for (int i = 0; i < tiles.size(); ++i) {
-		shapes[tiles[i]].setPosition((i % WIDTH) * TILESIZE, (i / WIDTH) * TILESIZE);
-		window.draw(shapes[tiles[i]]);
+		if (tiles[i] >= 7) {
+			wallsprites[tiles[i]].setPosition((i % WIDTH) * TILESIZE, (i / WIDTH) * TILESIZE);
+			window.draw(wallsprites[tiles[i]]);
+		}
+		else {
+			shapes[tiles[i]].setPosition((i % WIDTH) * TILESIZE, (i / WIDTH) * TILESIZE);
+			window.draw(shapes[tiles[i]]);
+		}
+		
 
 		if (tiles[i] == 1) {
 			dot.setPosition((i % WIDTH) * TILESIZE + TILESIZE / 2, (i / WIDTH) * TILESIZE + TILESIZE / 2);
@@ -119,7 +151,7 @@ void Level::drawPlayer(sf::RenderWindow& window, float dt)
 void Level::drawGhosts(sf::RenderWindow& window, float dt)
 {
 	for (int k = 0; k < ghosts.size(); ++k) {
-		ghosts[k].shape.setPosition(ghostPos[k]);
+		ghosts[k].sprite.setPosition(ghostPos[k]);
 		ghosts[k].draw(window, dt);
 	}
 }
