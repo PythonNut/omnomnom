@@ -96,18 +96,18 @@ while True:
 
         if oc_debounced == 'closed':
             if not nom:
-                if ud == "up":
-                    print("up" + ' '*50)
-                    # S.sendUp()
-                elif ud == "down":
-                    print("down"+ ' '*50)
-                    # S.sendDown()
-                elif lr == "left":
+                if lr == "left":
                     print("left"+ ' '*50)
                     # S.sendLeft()
                 elif lr == "right":
                     print("right"+ ' '*50)
                     # S.sendRight()
+                elif ud == "up":
+                    print("up" + ' '*50)
+                    # S.sendUp()
+                elif ud == "down":
+                    print("down"+ ' '*50)
+                    # S.sendDown()
             nom = True
         else:
             nom = False
