@@ -11,6 +11,7 @@ public:
 
     Direction clyde(int pacPosition, int clydePosition, Direction clydeDir);
     Direction spasy(int pacPosition, int clydePosition, Direction clydeDir);
+    Direction kinky(int pacPosition, int inkyPosition, Direction inkyDir);
 private:
 	Helper helper;
    	bool clydesConscious;
