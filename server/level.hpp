@@ -11,11 +11,13 @@
 class Level
 {
 private:
+	Helper helper;
+
 	std::vector<int> tiles;
 
 	// this will need to change to accomodate textures
 	std::vector<sf::RectangleShape> shapes;
-	sf::Vector2f personPos;
+	sf::Vector2f playerPos;
 
 	Player player;
 	Direction movingDirection;
