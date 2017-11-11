@@ -11,19 +11,19 @@ AI::AI(Helper& helper)
 	this->helper = helper;
 }
 
-Direction AI::kinky((int pacPosition, int inkyPosition, Direction inkyDir))
+Direction AI::kinky(int pacPosition, int inkyPosition, Direction inkyDir)
 {
     std::vector<Direction> validDirections;
-    if (!helper.isWall(helper.getAboveTile(clydePosition))){
+    if (!helper.isWall(helper.getAboveTile(inkyPosition))){
         validDirections.push_back(Direction::UP);
     }
-    if (!helper.isWall(helper.getRightTile(clydePosition))){
+    if (!helper.isWall(helper.getRightTile(inkyPosition))){
         validDirections.push_back(Direction::RIGHT);
     }
-    if (!helper.isWall(helper.getBottomTile(clydePosition))){
+    if (!helper.isWall(helper.getBottomTile(inkyPosition))){
         validDirections.push_back(Direction::DOWN);
     }     
-    if (!helper.isWall(helper.getLeftTile(clydePosition))){
+    if (!helper.isWall(helper.getLeftTile(inkyPosition))){
         validDirections.push_back(Direction::LEFT);
     }
     int s = validDirections.size();
@@ -36,44 +36,44 @@ Direction AI::kinky((int pacPosition, int inkyPosition, Direction inkyDir))
     if (s == 2){
         return inkyDir;
     }
-    pacx = getCol(pacPosition);
-    pacy = getRow(pacPosition);
-    inkx = getCol(inkyPosition);
-    inkyy = getRow(inkyPosition);
+    int pacx = helper.getCol(pacPosition);
+    int pacy = helper.getRow(pacPosition);
+    int inkx = helper.getCol(inkyPosition);
+    int inkyy = helper.getRow(inkyPosition);
 
     int score = 0;
     Direction best = inkyDir;
-    for (iterator i = validDirections.begin();i!=validDirections.end();++i){
-        if(validDirections[i] == Direction::UP){
+    for (auto i = validDirections.begin();i!=validDirections.end();++i){
+        if(*i == Direction::UP){
             if ((pacy-inkyy)>score){
-                it = find (validDirections.begin(), validDirections.end(), Directions::UP);
+                auto it = find (validDirections.begin(), validDirections.end(), Direction::UP);
                 if (it != validDirections.end()){
                     score = pacy-inkyy;
                     best = Direction::UP;
                 }
             }
         }
-        else if(validDirections[i] == Direction::DOWN){
+        else if(*i == Direction::DOWN){
             if ((inkyy-pacy)>score){
-                it = find (validDirections.begin(), validDirections.end(), Directions::DOWN);
+                auto it = find (validDirections.begin(), validDirections.end(), Direction::DOWN);
                 if (it != validDirections.end()){
                     score = inkyy-pacy;
                     best = Direction::DOWN;
                 }
             }
         }
-        else if(validDirections[i] == Direction::LEFT){
+        else if(*i == Direction::LEFT){
             if ((inkx-pacx)>score){
-                it = find (validDirections.begin(), validDirections.end(), Directions::LEFT);
+                auto it = find (validDirections.begin(), validDirections.end(), Direction::LEFT);
                 if (it != validDirections.end()){
                     score = inkx-pacx;
                     best = Direction::LEFT;
                 }
             }
         }
-        else if(validDirections[i] == Direction::RIGHT){
+        else if(*i == Direction::RIGHT){
             if ((pacx-inkx)>score){
-                it = find (validDirections.begin(), validDirections.end(), Directions::RIGHT);
+                auto it = find (validDirections.begin(), validDirections.end(), Direction::RIGHT);
                 if (it != validDirections.end()){
                     score = pacx-inkx;
                     best = Direction::RIGHT;
