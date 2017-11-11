@@ -47,7 +47,7 @@ private:
 	int getSquare(sf::Vector2f pos);
 	sf::Vector2f getPosInTile(sf::Vector2f pos);
 	bool willCrossMiddle(Direction direction, float dt);
-	bool willGhostCrossMiddle(Direction direction, float dt);
+	bool willGhostCrossMiddle(Direction direction, int i, float dt);
 
 public:
 	const int TILESIZE = 50;

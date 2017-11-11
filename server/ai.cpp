@@ -29,22 +29,25 @@ Direction AI::clyde(int pacPosition, int clydePosition, Direction clydeDir)
     int s = validDirections.size();
     if (s == 0){
         //If this line runs, there is significant trouble
-        return None
+		return Direction::NONE;
     }
-    else if(clydeDir == None){
+    else if(clydeDir == Direction::NONE){
         clydesConscious = true;
         int index = rand()%s;
         return validDirections[index];
     }
-    else if ((s>2 && !clydesConscious){
+    else if ((s>2 && !clydesConscious)) {
         clydesConscious = true;
         int index = rand()%s;
         return validDirections[index];
     }
-    else {
+    else if (s<=2){
         clydesConscious = false;
         return clydeDir;
     }
+	else {
+		return clydeDir;
+	}
 }
 
 Direction AI::spasy(int pacPosition, int clydePosition, Direction clydeDir)
