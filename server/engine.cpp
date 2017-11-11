@@ -50,7 +50,7 @@ void Engine::refreshState(int i)
 		states[i] = new Game;
 	}
 	if (i == 2) {
-		states[i] = new Menu;
+		states[i] = new Menu("images/gameover.png");
 	}
 }
 

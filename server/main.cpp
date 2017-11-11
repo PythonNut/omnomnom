@@ -8,7 +8,7 @@ int main() {
 
 	engine.pushState(new Menu("images/startscreen.png"));
 	engine.pushState(new Game);
-	engine.pushState(new Menu);
+	engine.pushState(new Menu("images/gameover.png"));
 	engine.loop();
 	return 0;
 }

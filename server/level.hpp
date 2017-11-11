@@ -25,6 +25,8 @@ private:
 	sf::CircleShape dot;
 
 	int score;
+	sf::Text scoreText;
+
 
 	// player stuff
 	sf::Vector2f playerPos;
@@ -58,10 +60,10 @@ private:
 public:
 	const int TILESIZE = 64;
 	const int SPEED = 150;
-	const int GHOSTSPEED = 100;
+	const int GHOSTSPEED = 60;
 	const int HEIGHT = 13;
 	const int WIDTH = 15;
-	const float TIMELIMIT = 1;
+	const float TIMELIMIT = 2;
 	void drawWalls(sf::RenderWindow& window, float dt);
 
 	void drawPlayer(sf::RenderWindow& window, float dt);

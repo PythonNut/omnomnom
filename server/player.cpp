@@ -15,7 +15,7 @@ Player::Player()
 	shape.setOrigin(32, 32);
 
 	version = 0;
-	ts = Texprite("images/face.png", sf::IntRect(0, 0, 64, 64), 1);
+	ts = Texprite("images/player.png", sf::IntRect(0, 0, 64, 64), 1);
 
 	sprite.setTexture(ts.tex);
 	sprite.setOrigin(32, 32);

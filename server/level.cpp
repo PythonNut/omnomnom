@@ -63,7 +63,7 @@ Level::Level()
 	dot.setOrigin(10, 10);
 
 	shapes[1].setFillColor(sf::Color::Black);
-	shapes[7].setFillColor(sf::Color::Blue);
+	shapes[0].setFillColor(sf::Color::Black);
 	shapes[8].setFillColor(sf::Color::Cyan);
 	shapes[9].setFillColor(sf::Color::Cyan);
 
@@ -119,6 +119,8 @@ Level::Level()
 	ai = AI(helper);
 
 	gameIsOver = false;
+
+	score = 0;
 }
 
 void Level::drawWalls(sf::RenderWindow& window, float dt)
@@ -451,6 +453,12 @@ void Level::update(float dt)
 	for (int k = 0; k < ghosts.size(); ++k) {
 		if (sqrt(pow(ghostPos[k].x - playerPos.x, 2) + pow(ghostPos[k].y - playerPos.y, 2)) < TILESIZE)
 			gameIsOver = true;
+	}
+
+	// check whether eat a dot
+	if (tiles[getSquare(playerPos)] == 1) {
+		++score;
+		tiles[getSquare(playerPos)] = 0;
 	}
 
 }

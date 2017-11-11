@@ -48,7 +48,7 @@ void Game::handleInput(Engine* engine, sf::RenderWindow& window)
 		default: break;
 		}
 	}
-
+	
 	switch (engine->getInput())
 		{
 		case 1:
@@ -74,7 +74,7 @@ void Game::handleInput(Engine* engine, sf::RenderWindow& window)
 		default:
 			break;
 	}
-
+	
 	
 
 
