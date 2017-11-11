@@ -33,9 +33,6 @@ Direction AI::kinky(int pacPosition, int inkyPosition, Direction inkyDir)
     if (s == 1){
         return validDirections[0];
     }
-    if (s == 2){
-        return inkyDir;
-    }
     int pacx = helper.getCol(pacPosition);
     int pacy = helper.getRow(pacPosition);
     int inkx = helper.getCol(inkyPosition);
@@ -45,19 +42,19 @@ Direction AI::kinky(int pacPosition, int inkyPosition, Direction inkyDir)
     Direction best = inkyDir;
     for (auto i = validDirections.begin();i!=validDirections.end();++i){
         if(*i == Direction::UP){
-            if ((pacy-inkyy)>score){
+            if ((inkyy-pacy)>score){
                 auto it = find (validDirections.begin(), validDirections.end(), Direction::UP);
                 if (it != validDirections.end()){
-                    score = pacy-inkyy;
+                    score = inkyy-pacy;
                     best = Direction::UP;
                 }
             }
         }
         else if(*i == Direction::DOWN){
-            if ((inkyy-pacy)>score){
+            if ((pacy-inkyy)>score){
                 auto it = find (validDirections.begin(), validDirections.end(), Direction::DOWN);
                 if (it != validDirections.end()){
-                    score = inkyy-pacy;
+                    score = pacy-inkyy;
                     best = Direction::DOWN;
                 }
             }

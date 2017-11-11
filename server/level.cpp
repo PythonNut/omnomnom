@@ -359,6 +359,16 @@ void Level::update(float dt)
 		moving = false;
 		movingDirection = Direction::NONE;
 	}
+
+
+
+
+	// detect whether colision with a ghost.
+	for (int k = 0; k < ghosts.size(); ++k) {
+		if (sqrt(pow(ghostPos[k].x - playerPos.x, 2) + pow(ghostPos[k].y - playerPos.y, 2)) < TILESIZE)
+			std::cout << "COLLIDE";
+	}
+
 }
 
 
