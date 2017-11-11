@@ -6,7 +6,7 @@ import time
 import cv2
 import socket_lib
 
-# S = socket_lib.ClientSocket()
+S = socket_lib.ClientSocket()
 
 video_capture = cv2.VideoCapture(0)
 
@@ -108,16 +108,16 @@ while True:
             if not nom:
                 if lr == "left":
                     print("left"+ ' '*50)
-                    # S.sendLeft()
+                    S.sendLeft()
                 elif lr == "right":
                     print("right"+ ' '*50)
-                    # S.sendRight()
+                    S.sendRight()
                 elif ud == "up":
                     print("up" + ' '*50)
-                    # S.sendUp()
+                    S.sendUp()
                 elif ud == "down":
                     print("down"+ ' '*50)
-                    # S.sendDown()
+                    S.sendDown()
             nom = True
         else:
             nom = False
@@ -157,6 +157,6 @@ while True:
         down_mark = ud_metric
 
 # Release handle to the webcam
-# del S
+del S
 video_capture.release()
 cv2.destroyAllWindows()
