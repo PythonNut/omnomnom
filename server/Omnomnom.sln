@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Omnomnom", "Omnomnom.vcxproj", "{97C91335-4AC0-45DC-916A-514C01619D24}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Omnomsock", "..\Omnomsock\Omnomsock.vcxproj", "{D84778D0-F07B-472A-A426-27E5F990B414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,19 @@ Global
 		{97C91335-4AC0-45DC-916A-514C01619D24}.Release|x64.Build.0 = Release|x64
 		{97C91335-4AC0-45DC-916A-514C01619D24}.Release|x86.ActiveCfg = Release|Win32
 		{97C91335-4AC0-45DC-916A-514C01619D24}.Release|x86.Build.0 = Release|Win32
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Debug|x64.ActiveCfg = Debug|x64
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Debug|x64.Build.0 = Debug|x64
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Debug|x86.ActiveCfg = Debug|Win32
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Debug|x86.Build.0 = Debug|Win32
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Release|x64.ActiveCfg = Release|x64
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Release|x64.Build.0 = Release|x64
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Release|x86.ActiveCfg = Release|Win32
+		{D84778D0-F07B-472A-A426-27E5F990B414}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01ED9EFC-86A9-4615-8A83-0D90E87BC9A1}
 	EndGlobalSection
 EndGlobal
