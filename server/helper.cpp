@@ -88,6 +88,15 @@ int Helper::getBottomTile(std::vector<int> map, int position) {
     }
 }
 
+bool isWall(std::vector<int> map, int position){
+    if (position >= 7){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void Helper::loadTiles(int width, int height, std::vector<int> tiles) {
 	WIDTH = width;
 	HEIGHT = height;
