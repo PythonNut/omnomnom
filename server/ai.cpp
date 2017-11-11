@@ -27,7 +27,14 @@ Direction AI::clyde(int pacPosition, int clydePosition, Direction clydeDir)
         validDirections.push_back(Direction::LEFT);
     }
     int s = validDirections.size();
-    if (s>2){
+    if (s == 0){
+        return None
+    }
+    else if(clydeDir == None){
+        int index = rand()%s;
+        return validDirections[index];
+    }
+    else if (s>2){
         int index = rand()%s;
         return validDirections[index];
     }
@@ -52,7 +59,14 @@ Direction AI::spasy(int pacPosition, int clydePosition, Direction clydeDir)
         validDirections.push_back(Direction::LEFT);
     }
     int s = validDirections.size();
-    if (s>1){
+    if (s == 0){
+        return None
+    }
+    else if(clydeDir == None){
+        int index = rand()%s;
+        return validDirections[index];
+    }
+    else if (s>1){
         int index = rand()%s;
         return validDirections[index];
     }
