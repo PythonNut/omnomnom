@@ -22,7 +22,7 @@ private:
 
 	// a visualized grid of some random set of tiles
 	// 8s are walls, 1s are empty spaces
-	const std::vector<int> tiles {
+	const std::vector<int> tiles{
 		8,8,8,8,8,8,8,8,
 		8,1,1,1,1,1,1,8,
 		8,1,8,8,1,8,1,8,
@@ -31,7 +31,7 @@ private:
 		8,8,1,1,1,1,1,8,
 		8,8,1,8,8,1,8,8,
 		8,8,8,8,8,8,8,8
-	}
+	};
 
 
 };
