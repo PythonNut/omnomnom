@@ -13,5 +13,5 @@ public:
     Direction spasy(int pacPosition, int clydePosition, Direction clydeDir);
 private:
 	Helper helper;
-
+   	bool clydesConscious;
 };
