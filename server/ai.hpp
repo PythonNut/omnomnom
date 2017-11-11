@@ -12,6 +12,7 @@ public:
     ai();
 
     Direction clyde(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir);
+    Direction spasy(std::vector<int> map, int pacPosition, int clydePosition, Direction clydeDir);
 private:
 
 }
