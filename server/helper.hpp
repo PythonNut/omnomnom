@@ -14,6 +14,14 @@ public:
 	// currently returns -1 for any invalid input (off the grid, or 
 	// Direction::NONE as inputs.
 	int nextTile(int position, Direction direction);
+	int getRow(int position);
+	int getCol(int position);
+	int getLeftTile(vector<int> map, int position);
+	int getAboveTile(vector<int> map, int position);
+	int getRightTile(vector<int> map, int position);
+	int getBottomTile(vector<int> map, int position);
+	
+	
 private:
 	// number of columns in the grid
 	const int WIDTH = 8;
