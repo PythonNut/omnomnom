@@ -17,14 +17,37 @@ Level::Level()
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
+		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) },
 		sf::RectangleShape{ sf::Vector2f(TILESIZE,TILESIZE) }
 	};
 
+	dot.setRadius(10);
+	dot.setFillColor(sf::Color::White);
+	dot.setOrigin(10, 10);
+
 	shapes[1].setFillColor(sf::Color::Black);
+	shapes[7].setFillColor(sf::Color::Blue);
 	shapes[8].setFillColor(sf::Color::Cyan);
+	shapes[9].setFillColor(sf::Color::Cyan);
+	shapes[10].setFillColor(sf::Color::Cyan);
+	shapes[11].setFillColor(sf::Color::Cyan);
+	shapes[12].setFillColor(sf::Color::Cyan);
+	shapes[13].setFillColor(sf::Color::Cyan);
+	shapes[14].setFillColor(sf::Color::Cyan);
+	shapes[15].setFillColor(sf::Color::Cyan);
+	shapes[16].setFillColor(sf::Color::Cyan);
+	shapes[17].setFillColor(sf::Color::Cyan);
+	shapes[18].setFillColor(sf::Color::Cyan);
 
 	// init player
-	playerPos = { 75, 75 };
+	playerPos = { 96, 96 };
 
 	time = 0;
 	turnTime = 0;
@@ -44,17 +67,22 @@ Level::Level()
 
 	ghostsMoving = { false };
 	tiles = { 
-		8,8,8,8,8,8,8,8,
-		8,1,1,1,1,1,1,8,
-		8,1,8,8,1,8,1,8,
-		8,1,1,1,1,1,1,8,
-		8,8,1,8,8,8,1,8,
-		8,8,1,1,1,1,1,8,
-		8,8,1,8,8,1,8,8,
-		8,8,8,8,8,8,8,8
+		10,7,7,7,7,7,7,7,7,7,7,7,7,7,11,
+		8,1,1,1,1,1,1,1,1,1,1,1,1,1,8,
+		8,1,10,7,7,7,15,1,10,7,7,7,15,1,8,
+		8,1,16,1,1,1,1,1,8,1,1,1,1,1,8,
+		8,1,1,1,17,7,15,1,8,1,10,7,15,1,8,
+		8,1,18,1,1,1,1,1,16,1,8,1,1,1,8,
+		8,1,12,7,7,7,11,1,1,1,8,1,14,1,8,
+		8,1,1,1,1,1,8,1,18,1,8,1,1,1,8,
+		8,1,17,7,15,1,8,1,8,1,12,7,15,1,8,
+		8,1,1,1,1,1,8,1,8,1,1,1,1,1,8,
+		8,1,17,7,7,7,13,1,12,7,7,7,15,1,8,
+		8,1,1,1,1,1,1,1,1,1,1,1,1,1,8,
+		12,7,7,7,7,7,7,7,7,7,7,7,7,7,13
 	};
 
-	helper.loadTiles(8, 8, tiles);
+	helper.loadTiles(13, 15, tiles);
 
 
 	// init AI
@@ -65,10 +93,16 @@ Level::Level()
 
 void Level::drawWalls(sf::RenderWindow& window, float dt)
 {
-	for (int i = 0; i < 64; ++i) {
-		shapes[tiles[i]].setPosition((i % 8) * TILESIZE, (i / 8) * TILESIZE);
+	for (int i = 0; i < tiles.size(); ++i) {
+		shapes[tiles[i]].setPosition((i % WIDTH) * TILESIZE, (i / WIDTH) * TILESIZE);
 		window.draw(shapes[tiles[i]]);
+
+		if (tiles[i] == 1) {
+			dot.setPosition((i % WIDTH) * TILESIZE + TILESIZE / 2, (i / WIDTH) * TILESIZE + TILESIZE / 2);
+			window.draw(dot);
+		}
 	}
+
 }
 
 void Level::drawPlayer(sf::RenderWindow& window, float dt)
@@ -324,7 +358,8 @@ bool Level::willGhostCrossMiddle(Direction direction, int i, float dt)
 
 int Level::getSquare(sf::Vector2f pos)
 {
-	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * 8;
+	std::cout << int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * WIDTH << std::endl;
+	return int(pos.x) / TILESIZE + (int(pos.y) / TILESIZE) * WIDTH;
 }
 
 sf::Vector2f Level::getPosInTile(sf::Vector2f pos)

@@ -19,6 +19,9 @@ private:
 
 	// this will need to change to accomodate textures
 	std::vector<sf::RectangleShape> shapes; // these are grid textures
+	sf::CircleShape dot;
+
+	int score;
 
 	// player stuff
 	sf::Vector2f playerPos;
@@ -50,11 +53,11 @@ private:
 	bool willGhostCrossMiddle(Direction direction, int i, float dt);
 	bool gameIsOver;
 public:
-	const int TILESIZE = 50;
+	const int TILESIZE = 64;
 	const int SPEED = 150;
 	const int GHOSTSPEED = 100;
-	const int HEIGHT = 8;
-	const int WIDTH = 8;
+	const int HEIGHT = 13;
+	const int WIDTH = 15;
 	const float TIMELIMIT = 1;
 	void drawWalls(sf::RenderWindow& window, float dt);
 

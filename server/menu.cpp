@@ -30,6 +30,7 @@ void Menu::handleInput(sf::RenderWindow& window)
 void Menu::draw(sf::RenderWindow& window, float dt)
 {
 	// display some image
+	window.draw(sprite);
 }
 
 void Menu::update(Engine* engine, float dt)
@@ -44,4 +45,13 @@ void Menu::update(Engine* engine, float dt)
 Menu::Menu()
 {
 	moveOn = false;
+
+}
+
+Menu::Menu(const std::string& filename)
+{
+	moveOn = false;
+
+	ts = Texprite(filename, sf::IntRect(0, 0, 960, 832), 1);
+	sprite.setTexture(ts.tex);
 }

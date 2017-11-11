@@ -10,15 +10,15 @@ Player::Player()
 	// actually load a texture, and implement an animation switching algorithm
 
 
-	shape.setRadius(20);
+	shape.setRadius(32);
 	shape.setFillColor(sf::Color::White);
-	shape.setOrigin(20, 20);
+	shape.setOrigin(32, 32);
 
 	version = 0;
-	ts = Texprite("images/face.png", sf::IntRect(0, 0, 50, 50), 1);
+	ts = Texprite("images/face.png", sf::IntRect(0, 0, 64, 64), 1);
 
 	sprite.setTexture(ts.tex);
-	sprite.setOrigin(25, 25);
+	sprite.setOrigin(32, 32);
 }
 
 void Player::draw(sf::RenderWindow& window, float dt)
