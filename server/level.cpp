@@ -71,7 +71,7 @@ void Level::drawWalls(sf::RenderWindow& window, float dt)
 
 void Level::drawPlayer(sf::RenderWindow& window, float dt)
 {
-	player.shape.setPosition(playerPos);
+	player.sprite.setPosition(playerPos);
 	player.draw(window, dt);
 }
 
