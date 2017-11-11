@@ -26,7 +26,7 @@ private:
 	Direction movingDirection;
 	Direction turnDirection;
 
-	bool moving;
+	int moving;
 
 	// movement helpers
 	void playerMove(float dt);
@@ -36,8 +36,9 @@ private:
 	std::vector<Ghost> ghosts;
 	std::vector<Direction> ghostMovingDirection;
 	std::vector<Direction> ghostTurnDirection;
-
-	void ghostMove(Ghost ghost, float dt);
+	std::vector<int> ghostsMoving;
+	void ghostMove(float dt, int i);
+	void ghostInput(Direction direction, int i);
 
 	// AI
 	AI ai;

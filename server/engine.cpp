@@ -80,7 +80,7 @@ void Engine::draw(float dt)
 {
 	level.drawWalls(window, dt);
 	level.drawPlayer(window, dt);
-
+	level.drawGhosts(window, dt);
 }
 
 void Engine::update(float dt)

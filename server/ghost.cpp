@@ -10,7 +10,7 @@ Ghost::Ghost()
 
 	shape.setRadius(20);
 	shape.setFillColor(sf::Color::White);
-	shape.setOrigin(0, 0);
+	shape.setOrigin(20, 20);
 }
 
 Ghost::Ghost(sf::Color color)
@@ -21,7 +21,7 @@ Ghost::Ghost(sf::Color color)
 
 	shape.setRadius(20);
 	shape.setFillColor(color);
-	shape.setOrigin(0, 0);
+	shape.setOrigin(20, 20);
 }
 
 void Ghost::draw(sf::RenderWindow& window, float dt)
