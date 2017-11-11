@@ -18,6 +18,7 @@ void Menu::handleInput(sf::RenderWindow& window)
 		case sf::Event::KeyPressed:
 		{
 			// do something
+			moveOn = true;
 		}
 		default: break;
 		}
@@ -33,10 +34,14 @@ void Menu::draw(sf::RenderWindow& window, float dt)
 
 void Menu::update(Engine* engine, float dt)
 {
-	
+	if (moveOn)
+	{
+		engine->state = 1;
+		engine->refreshState(1);
+	}
 }
 
 Menu::Menu()
 {
-
+	moveOn = false;
 }

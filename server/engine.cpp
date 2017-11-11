@@ -1,5 +1,7 @@
 #include "engine.hpp"
 #include "state.hpp"
+#include "game.hpp"
+#include "menu.hpp"
 
 #include <iostream>
 
@@ -9,7 +11,7 @@ Engine::Engine()
 	window.setFramerateLimit(60);
 	
 	
-	state = 1;
+	state = 0;
 }
 
 void Engine::loop()
@@ -37,4 +39,15 @@ void Engine::pushState(State* state)
 {
 	states.push_back(state);
 	return;
+}
+
+void Engine::refreshState(int i)
+{
+	delete states[i];
+	if (i == 1) {
+		states[i] = new Game;
+	}
+	if (i == 2) {
+		states[i] = new Menu;
+	}
 }

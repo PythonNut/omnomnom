@@ -64,6 +64,7 @@ void Game::update(Engine* engine, float dt)
 	level.update(dt);
 	if (level.isGameOver())
 		engine->state = 2;
+		engine->refreshState(2);
 }
 
 Game::Game()

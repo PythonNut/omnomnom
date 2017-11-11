@@ -344,7 +344,7 @@ void Level::update(float dt)
 	turnTime += dt;
 	
 	if (willGhostCrossMiddle(ghostMovingDirection[0], 0, dt) || ghostMovingDirection[0] == Direction::NONE) {
-		ghostInput(ai.kinky(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
+		ghostInput(ai.pinky(getSquare(playerPos), getSquare(ghostPos[0]), ghostMovingDirection[0]), 0);
 	}
 	for (int k = 0; k < ghosts.size(); ++k) {
 		ghostMove(dt, k);

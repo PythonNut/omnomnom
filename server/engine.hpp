@@ -15,6 +15,7 @@ public:
 	std::vector<State*> states;
 	State* getState();
 	void pushState(State* state);
+	void refreshState(int i);
 	int state;
 	Engine();
 };
