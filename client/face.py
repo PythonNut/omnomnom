@@ -81,6 +81,8 @@ while True:
             if ud_metric < up_mark + (down_mark - up_mark) * 0.3:
                 ud = "up"
             if ud_metric > down_mark + (up_mark - down_mark) * 0.15:
+                # TODO: Tweaking this condition may be helpful, since going down seems
+                # Trickier than going up once the camera is in the right position.
                 ud = "down"
         else:
             if ud_metric < 0.3:
